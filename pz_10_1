@@ -1,0 +1,39 @@
+# 1. Средствами языка Python сформировать текстовый файл (.txt), содержащий
+#       последовательность из целых положительных и отрицательных чисел. Сформировать
+#новый текстовый файл (.txt) следующего вида, предварительно выполнив требуемую
+#обработку элементов:
+#Исходные данные:
+#Количество элементов:
+#Среднее арифметическое элементов:
+#Последовательность, в которой каждый последующий элемент равен квадрату суммы двух
+#соседних элементов:
+
+
+numbers = [5, -3, 8, 2, -6, 4, 7]
+
+with open("data18_1.txt", "w", encoding="utf-8") as file:
+    file.write(" ".join(map(str, numbers)))
+
+
+with open("data18_1.txt", "r", encoding="utf-8") as file:
+    nums = list(map(int, file.read().split()))
+
+count = len(nums)
+
+
+average = sum(nums) / count
+
+new_sequence = []
+for i in range(len(nums) - 1):
+    new_sequence.append((nums[i] + nums[i + 1]) ** 2)
+
+with open("data18_2.txt", "w", encoding="utf-8") as file:
+    file.write("Исходные данные:\n")
+    file.write(" ".join(map(str, nums)) + "\n")
+    file.write(f"Количество элементов: {count}\n")
+    file.write(f"Среднее арифметическое элементов: {average:.2f}\n")
+    file.write("Последовательность, в которой каждый последующий элемент "
+               "равен квадрату суммы двух соседних элементов:\n")
+    file.write(" ".join(map(str, new_sequence)))
+
+print("Результаты записаны в файл data18_2.txt")
