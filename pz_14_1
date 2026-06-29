@@ -1,0 +1,90 @@
+#Задание 1. В соответствии с номером варианта перейти по ссылке на прототип. Реализовать
+#его в IDE PyCharm Community с применением пакета tk. Получить интерфейс максимально
+#приближенный к оригиналу (см. таблицу 1).
+
+
+
+
+
+
+import tkinter as tk
+from tkinter import ttk
+
+root = tk.Tk()
+root.title("Registration Form")
+root.geometry("500x500")
+root.resizable(False, False)
+
+title = tk.Label(
+    root,
+    text="Registration Form",
+    font=("Arial", 18, "bold")
+)
+title.pack(pady=15)
+
+frame = tk.Frame(root)
+frame.pack(pady=10)
+
+tk.Label(frame, text="First Name").grid(row=0, column=0, sticky="w", pady=5)
+entry_name = tk.Entry(frame, width=30)
+entry_name.grid(row=0, column=1)
+
+tk.Label(frame, text="Last Name").grid(row=1, column=0, sticky="w", pady=5)
+entry_lastname = tk.Entry(frame, width=30)
+entry_lastname.grid(row=1, column=1)
+
+tk.Label(frame, text="Email").grid(row=2, column=0, sticky="w", pady=5)
+entry_email = tk.Entry(frame, width=30)
+entry_email.grid(row=2, column=1)
+
+tk.Label(frame, text="Password").grid(row=3, column=0, sticky="w", pady=5)
+entry_password = tk.Entry(frame, width=30, show="*")
+entry_password.grid(row=3, column=1)
+
+tk.Label(frame, text="Gender").grid(row=4, column=0, sticky="w", pady=5)
+
+gender = tk.StringVar(value="Male")
+
+tk.Radiobutton(
+    frame,
+    text="Male",
+    variable=gender,
+    value="Male"
+).grid(row=4, column=1, sticky="w")
+
+tk.Radiobutton(
+    frame,
+    text="Female",
+    variable=gender,
+    value="Female"
+).grid(row=4, column=1, padx=80, sticky="w")
+
+tk.Label(frame, text="Country").grid(row=5, column=0, sticky="w", pady=5)
+
+country = ttk.Combobox(
+    frame,
+    values=["Russia", "USA", "Germany", "France"]
+)
+country.grid(row=5, column=1)
+country.current(0)
+
+agree = tk.BooleanVar()
+
+tk.Checkbutton(
+    frame,
+    text="I accept terms and conditions",
+    variable=agree
+).grid(row=6, column=0, columnspan=2, pady=10)
+
+
+def submit():
+    print("Form submitted")
+
+tk.Button(
+    root,
+    text="Register",
+    width=20,
+    command=submit
+).pack(pady=20)
+
+root.mainloop()
