@@ -1,0 +1,234 @@
+#Приложение СТРАХОВАЯ КОМПАНИЯ для некоторой организации. БД должна
+#содержать таблицу Договор со следующей структурой записи: дата заключения, страховая
+#сумма, вид страхования, тарифная ставка и филиал, в котором заключался договор.
+
+
+
+
+
+
+import sqlite3
+
+
+conn = sqlite3.connect("insurance_company.db")
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS dogovor (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    date TEXT,
+    insurance_sum REAL,
+    insurance_type TEXT,
+    tariff_rate REAL,
+    branch TEXT
+)
+""")
+
+conn.commit()
+
+
+def add_contract():
+    date = input("Дата заключения: ")
+    insurance_sum = float(input("Страховая сумма: "))
+    insurance_type = input("Вид страхования: ")
+    tariff_rate = float(input("Тарифная ставка: "))
+    branch = input("Филиал: ")
+
+    cursor.execute("""
+    INSERT INTO dogovor
+    (date, insurance_sum, insurance_type, tariff_rate, branch)
+    VALUES (?, ?, ?, ?, ?)
+    """, (
+        date,
+        insurance_sum,
+        insurance_type,
+        tariff_rate,
+        branch
+    ))
+
+    conn.commit()
+    print("Запись добавлена.")
+
+
+def show_all():
+    cursor.execute("SELECT * FROM dogovor")
+
+    rows = cursor.fetchall()
+
+    print("\nСписок договоров:\n")
+
+    for row in rows:
+        print(row)
+
+
+
+def search_contract():
+
+    print("\n1 - По филиалу")
+    print("2 - По виду страхования")
+    print("3 - По страховой сумме")
+
+    choice = input("Выберите поиск: ")
+
+    if choice == "1":
+
+        branch = input("Введите филиал: ")
+
+        cursor.execute("""
+        SELECT * FROM dogovor
+        WHERE branch = ?
+        """, (branch,))
+
+    elif choice == "2":
+
+        insurance_type = input(
+            "Введите вид страхования: "
+        )
+
+        cursor.execute("""
+        SELECT * FROM dogovor
+        WHERE insurance_type = ?
+        """, (insurance_type,))
+
+    elif choice == "3":
+
+        insurance_sum = float(
+            input("Введите страховую сумму: ")
+        )
+
+        cursor.execute("""
+        SELECT * FROM dogovor
+        WHERE insurance_sum >= ?
+        """, (insurance_sum,))
+
+    else:
+        return
+
+    for row in cursor.fetchall():
+        print(row)
+
+
+def delete_contract():
+
+    print("\n1 - По ID")
+    print("2 - По филиалу")
+    print("3 - По виду страхования")
+
+    choice = input("Выберите удаление: ")
+
+    if choice == "1":
+
+        contract_id = int(input("ID: "))
+
+        cursor.execute("""
+        DELETE FROM dogovor
+        WHERE id = ?
+        """, (contract_id,))
+
+    elif choice == "2":
+
+        branch = input("Филиал: ")
+
+        cursor.execute("""
+        DELETE FROM dogovor
+        WHERE branch = ?
+        """, (branch,))
+
+    elif choice == "3":
+
+        insurance_type = input(
+            "Вид страхования: "
+        )
+
+        cursor.execute("""
+        DELETE FROM dogovor
+        WHERE insurance_type = ?
+        """, (insurance_type,))
+
+    conn.commit()
+
+    print("Удаление выполнено.")
+
+
+def update_contract():
+
+    print("\n1 - Изменить страховую сумму")
+    print("2 - Изменить тарифную ставку")
+    print("3 - Изменить филиал")
+
+    choice = input("Выберите действие: ")
+
+    contract_id = int(input("ID договора: "))
+
+    if choice == "1":
+
+        new_sum = float(
+            input("Новая страховая сумма: ")
+        )
+
+        cursor.execute("""
+        UPDATE dogovor
+        SET insurance_sum = ?
+        WHERE id = ?
+        """, (new_sum, contract_id))
+
+    elif choice == "2":
+
+        new_rate = float(
+            input("Новая тарифная ставка: ")
+        )
+
+        cursor.execute("""
+        UPDATE dogovor
+        SET tariff_rate = ?
+        WHERE id = ?
+        """, (new_rate, contract_id))
+
+    elif choice == "3":
+
+        new_branch = input(
+            "Новый филиал: "
+        )
+
+        cursor.execute("""
+        UPDATE dogovor
+        SET branch = ?
+        WHERE id = ?
+        """, (new_branch, contract_id))
+
+    conn.commit()
+
+    print("Данные обновлены.")
+
+
+while True:
+
+    print("\nСТРАХОВАЯ КОМПАНИЯ")
+    print("1. Добавить договор")
+    print("2. Показать все договоры")
+    print("3. Поиск")
+    print("4. Редактирование")
+    print("5. Удаление")
+    print("0. Выход")
+
+    choice = input("Выберите действие: ")
+
+    if choice == "1":
+        add_contract()
+
+    elif choice == "2":
+        show_all()
+
+    elif choice == "3":
+        search_contract()
+
+    elif choice == "4":
+        update_contract()
+
+    elif choice == "5":
+        delete_contract()
+
+    elif choice == "0":
+        break
+
+conn.close()
