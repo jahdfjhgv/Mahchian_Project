@@ -1,0 +1,22 @@
+# Вариант 18. Задание 1. Составить программу, в которой функция генерирует четырехзначное число и определяет, есть ли в числе одинаковые цифры.
+
+import random
+
+def has_duplicate_digits():
+    number = random.randint(1000, 9999)
+    print(f"Сгенерированное число: {number}")
+    
+    number_str = str(number)
+    
+    # Множество содержит только уникальные элементы.
+    # Если длина множества меньше длины строки, значит были повторы.
+    if len(set(number_str)) < len(number_str):
+        return "В числе есть одинаковые цифры."
+    else:
+        return "В числе все цифры различные."
+
+try:
+    result = has_duplicate_digits()
+    print(result)
+except Exception:
+    print("Произошла ошибка при выполнении программы!")
