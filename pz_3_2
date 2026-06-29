@@ -1,0 +1,38 @@
+# Вариант 18. Задание 2. Даны три числа. Найти среднее из них (то есть число, расположенное между наименьшим и наибольшим).
+
+try:
+    a = input("Введите первое число: ")
+    while type(a) != float:
+        try:
+            a = float(a)
+        except ValueError:
+            print("Неправильно ввели!")
+            a = input("Введите первое число: ")
+
+    b = input("Введите второе число: ")
+    while type(b) != float:
+        try:
+            b = float(b)
+        except ValueError:
+            print("Неправильно ввели!")
+            b = input("Введите второе число: ")
+
+    c = input("Введите третье число: ")
+    while type(c) != float:
+        try:
+            c = float(c)
+        except ValueError:
+            print("Неправильно ввели!")
+            c = input("Введите третье число: ")
+
+    if (b <= a <= c) or (c <= a <= b):
+        middle = a
+    elif (a <= b <= c) or (c <= b <= a):
+        middle = b
+    else:
+        middle = c
+
+    print(middle)
+
+except ValueError:
+    print("Ошибка обработки данных!")
