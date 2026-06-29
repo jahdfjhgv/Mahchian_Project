@@ -1,0 +1,19 @@
+# Из исходного текстового файла (expansion.txt) выбрать имена фалов,
+#соответствующие типам: .xls, .xml, .html, .css, .py. Посчитать количество полученных
+#элементов.
+
+import re
+
+with open("expansion.txt", "r", encoding="utf-8") as file:
+    text = file.read()
+
+pattern = r'\b[\w\-]+\.(?:xls|xml|html|css|py)\b'
+
+files = re.findall(pattern, text, re.IGNORECASE)
+
+print("Найденные файлы:")
+
+for file_name in files:
+    print(file_name)
+
+print("\nКоличество найденных файлов:", len(files))
