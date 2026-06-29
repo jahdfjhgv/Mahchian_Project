@@ -1,0 +1,26 @@
+#2. В матрице найти среднее арифметическое элементов последних двух столбцов.
+
+matrix = [
+    [3, 5, 6, 8],
+    [7, 9, 2, 4],
+    [12, 4, 15, 10]
+]
+
+print("Матрица:")
+
+for row in matrix:
+    print(row)
+
+
+last_two_columns = [
+    element
+    for row in matrix
+    for element in row[-2:]
+]
+
+average = sum(last_two_columns) / len(last_two_columns)
+
+print("\nЭлементы последних двух столбцов:")
+print(last_two_columns)
+
+print("Среднее арифметическое:", average)
