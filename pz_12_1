@@ -1,0 +1,23 @@
+#1. В матрице элементы кратные 3 увеличить в 3 раза.
+
+matrix = [
+    [3, 5, 6],
+    [7, 9, 2],
+    [12, 4, 15]
+]
+
+print("Исходная матрица:")
+
+for row in matrix:
+    print(row)
+
+
+new_matrix = [
+    [element * 3 if element % 3 == 0 else element for element in row]
+    for row in matrix
+]
+
+print("\nМатрица после преобразования:")
+
+for row in new_matrix:
+    print(row)
