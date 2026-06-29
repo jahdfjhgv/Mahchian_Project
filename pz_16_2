@@ -1,0 +1,55 @@
+# Создание базового класса "Транспортное средство" и его наследование для создания
+#классов "Автомобиль" и "Мотоцикл". В классе "Транспортное средство" будут
+#общие свойства, такие как максимальная скорость и количество колес, 
+# а классынаследники будут иметь свои уникальные свойства и методы.
+
+
+
+
+class TransportVehicle:
+    """Базовый класс транспортного средства."""
+
+    def __init__(self, max_speed, wheels):
+        self.max_speed = max_speed
+        self.wheels = wheels
+
+    def show_info(self):
+        print(f"Максимальная скорость: {self.max_speed} км/ч")
+        print(f"Количество колес: {self.wheels}")
+
+
+class Car(TransportVehicle):
+    """Класс Автомобиль."""
+
+    def __init__(self, brand, max_speed):
+        super().__init__(max_speed, 4)
+        self.brand = brand
+
+    def open_trunk(self):
+        print(f"У автомобиля {self.brand} открыт багажник.")
+
+
+class Motorcycle(TransportVehicle):
+    """Класс Мотоцикл."""
+
+    def __init__(self, model, max_speed):
+        super().__init__(max_speed, 2)
+        self.model = model
+
+    def ride(self):
+        print(f"Мотоцикл {self.model} начал движение.")
+
+
+car = Car("Toyota", 220)
+
+print("=== Автомобиль ===")
+car.show_info()
+car.open_trunk()
+
+print()
+
+motorcycle = Motorcycle("Yamaha R1", 300)
+
+print("=== Мотоцикл ===")
+motorcycle.show_info()
+motorcycle.ride()
