@@ -1,0 +1,22 @@
+#1.В последовательности на n целых элементов найти среднее арифметическое
+#элементов первой трети.
+
+
+
+from functools import reduce
+
+numbers = [2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+print("Исходная последовательность:")
+print(numbers)
+
+n = len(numbers)
+
+middle_third = numbers[n // 3: 2 * n // 3]
+
+print("\nСредняя треть:")
+print(middle_third)
+
+product = reduce(lambda x, y: x * y, middle_third)
+
+print("\nПроизведение элементов средней трети:", product)
